@@ -1,2 +1,1 @@
-
-python app.py --dubug run
+Public Key Authentication Chat System
