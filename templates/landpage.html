@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Landpage</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f4;
+      }
+
+      .card {
+        background-color: #ccc;
+        width: 400px;
+        padding: 20px;
+        border-radius: 5px;
+        text-align: center;
+      }
+
+      .title {
+        font-size: 20px;
+        margin-bottom: 20px;
+      }
+
+      .title2 {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+
+      .button-container {
+        display: flex;
+        justify-content: center;
+      }
+
+      .button {
+        background-color: #4285f4;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        margin: 0 10px;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1 class="title">Welcome, To Securely Chat Application</h1>
+      <h3 class="title2">Please Register or Login to continue</h3>
+      <div class="button-container">
+        <a href="{{ url_for('signup') }}" class="button">Register</a>
+        <a href="{{ url_for('login') }}" class="button">Login</a>
+      </div>
+    </div>
+    <script>
+      console.log("Landpage Load");
+    </script>
+  </body>
+</html>

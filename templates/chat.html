@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='chat.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <script>
+      const user_name = "{{ user_name }}";
+    </script>
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="sidebar-header">
+        {% if user_name %}
+        <h3>{{ user_name }}</h3>
+        {% else %}
+        <h3>Guest</h3>
+        {% endif %}
+      </div>
+      <ul class="sidebar-links">
+        <li>
+          <a href="{{ url_for('dashboard') }}"
+            ><i class="fas fa-home"></i> Home</a
+          >
+        </li>
+        <li class="active">
+          <a href="{{ url_for('chat') }}"
+            ><i class="fas fa-comments"></i> Chat</a
+          >
+        </li>
+        <li>
+          <a href="{{ url_for('credentials') }}"
+            ><i class="fas fa-key"></i> Credentials</a
+          >
+        </li>
+        <li>
+          <a href="{{ url_for('settings') }}"
+            ><i class="fas fa-cog"></i> Settings</a
+          >
+        </li>
+        <li>
+          <a href="{{ url_for('logout') }}"
+            ><i class="fas fa-door"></i> Logout</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Chats</h3>
+      <h5>Recent Chats</h5>
+      <div class="Card-Container">
+        <div class="chat-card1">
+          {% for user in users %} {% if user[0] != user_name %}
+          <div class="label-field">
+            <label
+              for="field1"
+              style="width: 70%"
+              onclick="loadConversation('{{ user[1] }}')"
+              >{{ user[1] }}</label
+            >
+            <label for="field2" style="width: 30%"
+              >Public Key
+              <!-- <small>{{ user[2] }}</small> -->
+              <i class="fas fa-copy"></i
+            ></label>
+          </div>
+          {% endif %} {% endfor %}
+        </div>
+
+        <div class="chat-card2">
+          <div class="card-header" id="header">
+            <h3 id="clicked-user-name">User's Chat</h3>
+          </div>
+          <div class="card-body">
+            <!-- Display conversation messages -->
+            <div class="messages">
+              <!-- Add the class "messages" to this div element -->
+              {% if conversation %} {% for message in conversation %}
+              <p class="{% if message.sender == user_name %}sender-message{% else %}receiver-message{% endif %}">
+                <strong>{{ message.sender }}:</strong>
+                <span class="message-text">{{ message.message }}</span>
+                <small>
+                  {% if message.signature %}
+                    <span class="signature-verification {% if message.signature_verified %}verified{% else %}unverified{% endif %}">
+                      {% if message.signature_verified %}Verified{% else %}Unverified{% endif %}
+                    </span>
+                  {% else %}
+                    Receiver Signature
+                  {% endif %}
+                  - <span class="time-stamp">{{ message.time }}</span>
+                </small>
+              </p>
+              {% endfor %} {% else %}
+              <div class="no-messages">
+                <p>No messages yet.</p>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <form id="message-form" action="/send-message" method="POST">
+              <input
+                type="text"
+                name="receiver_name"
+                id="receiver-name-input"
+                placeholder="Enter receiver's name"
+              />
+              <input
+                type="text"
+                id="message-input"
+                name="message"
+                placeholder="Type your message"
+              />
+
+              <button type="submit">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      // Function to show the tooltip with the signature when hovering over the "Signature" text
+      function showSignatureTooltip(event, signature) {
+        const tooltip = document.createElement("div");
+        tooltip.className = "signature-tooltip";
+        tooltip.textContent = signature;
+        document.body.appendChild(tooltip);
+    
+        // Position the tooltip next to the "Signature" text
+        tooltip.style.top = `${event.clientY}px`;
+        tooltip.style.left = `${event.clientX + 10}px`;
+      }
+    
+      // Function to hide the tooltip when the mouse leaves the "Signature" text
+      function hideSignatureTooltip() {
+        const tooltip = document.querySelector(".signature-tooltip");
+        if (tooltip) {
+          tooltip.remove();
+        }
+      }
+    
+      // Add event listeners to all "Signature" elements to show/hide the tooltip
+      const signatureElements = document.querySelectorAll("[id^='signature-']");
+      signatureElements.forEach((element) => {
+        element.addEventListener("mouseover", (event) => {
+          const signature = event.target.textContent;
+          showSignatureTooltip(event, signature);
+        });
+        element.addEventListener("mouseout", hideSignatureTooltip);
+      });
+    </script>
+    
+    <script>
+      // Function to load conversation between clicked user and the current logged-in user
+      function loadConversation(clickedUserName) {
+        const clickedUserNameElement =
+          document.getElementById("clicked-user-name");
+        clickedUserNameElement.innerText = `${clickedUserName}'s Chat`;
+
+        // Fetch conversation messages between clicked user and the current user
+        fetch(`/get-conversation/${clickedUserName}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("DATA", data);
+            // Handle the response from the backend and update the conversation messages
+            const messagesDiv = document.querySelector(".messages");
+            messagesDiv.innerHTML = ""; // Clear previous messages
+
+            if (data.conversation) {
+        data.conversation.forEach((message) => {
+          const messageElement = document.createElement("p");
+          messageElement.innerHTML = `
+          <strong>${message.sender}:</strong> ${message.message}<br>
+            <small>
+              ${
+                message.signature
+                  ? `<span class="signature-verification ${
+                      message.signature ? "verified" : "unverified"
+                    }">${message.signature ? "Verified" : "Unverified"}</span>`
+                  : "Receiver Signature"
+              }
+              - ${message.time}
+            </small>
+          `;
+          messageElement.classList.add(
+            message.sender === user_name ? "sender-message" : "receiver-message"
+          );
+          messagesDiv.appendChild(messageElement);
+        });
+      } else {
+              const noMessagesDiv = document.createElement("div");
+              noMessagesDiv.classList.add("no-messages");
+              noMessagesDiv.innerHTML = "<p>No messages yet.</p>";
+              messagesDiv.appendChild(noMessagesDiv);
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+
+      // Add event listener to the form submission
+      document
+        .getElementById("message-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent default form submission
+          const receiverName = document.getElementById(
+            "receiver-name-input"
+          ).value;
+          const message = document.getElementById("message-input").value;
+
+          // Send the receiver's name and message to the backend using fetch API
+          fetch("/send-message", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              receiver_name: receiverName,
+              message: message,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              // Handle the response from the backend if needed
+              console.log(data);
+              if (data.success) {
+                // Refresh the conversation messages after successful message submission
+                loadConversation(receiverName);
+                // Clear the message input field
+                document.getElementById("message-input").value = "";
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,154 @@
+body {
+    background-color: skyblue;
+    margin: 0;
+    padding: 0;
+}
+
+.profile-image {
+    border-radius: 50%;
+}
+
+.sidebar {
+    background-color: #fff;
+    width: 250px;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.sidebar-header {
+    text-align: center;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px solid blue; /* Add blue bottom line */
+}
+
+.user-name {
+    padding-top: 10px; /* Increase top padding for user name */
+}
+
+.sidebar-header img {
+    max-width: 100%;
+    height: auto;
+}
+
+.sidebar-header h3 {
+    margin-top: 10px;
+}
+
+.sidebar-links {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.sidebar-links li {
+    margin-bottom: 10px;
+}
+
+.sidebar-links li a {
+    color: blue;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.sidebar-links li.active a {
+    background-color: blue;
+    color: white;
+}
+
+.content {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        position: static;
+        height: auto;
+    }
+
+    .content {
+        margin-left: 0;
+    }
+}
+
+
+/* Card styles */
+.card {
+    margin: 50px auto;
+    width: 500px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-header {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .card-header h3 {
+    margin: 0;
+  }
+  
+  .card-body {
+    padding: 20px;
+    background-color: blue;
+    color: #fff;
+  }
+  
+  .card-footer {
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-top: 1px solid #ddd;
+  }
+  
+  .card-footer h4 {
+    margin-top: 0;
+  }
+  
+  .setting-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .setting-option label {
+    margin-right: 10px;
+  }
+  
+  /* Media Queries for responsiveness */
+  @media screen and (max-width: 768px) {
+    .sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+      padding-top: 0;
+    }
+    .card {
+      width: 100%;
+    }
+  }
+
+  /* Apply dark mode styles */
+body.dark-mode {
+    background-color: #222;
+    color: #fff;
+  }
+  
+  .card-header,
+  .card-footer {
+    background-color: #333;
+  }
+  
+  .setting-option label {
+    color: #fff;
+  }
+  

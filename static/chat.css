@@ -1,0 +1,293 @@
+/* main.css */
+body {
+  background-color: skyblue;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-image {
+  border-radius: 50%;
+}
+
+.sidebar {
+  background-color: #fff;
+  width: 250px;
+  padding: 20px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+.sidebar-header {
+  text-align: center;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 2px solid blue; /* Add blue bottom line */
+}
+
+.user-name {
+  padding-top: 10px; /* Increase top padding for user name */
+}
+
+.sidebar-header img {
+  max-width: 100%;
+  height: auto;
+}
+
+.sidebar-header h3 {
+  margin-top: 10px;
+}
+
+.sidebar-links {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.sidebar-links li {
+  margin-bottom: 10px;
+}
+
+.sidebar-links li a {
+  color: blue;
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.sidebar-links li.active a {
+  background-color: blue;
+  color: white;
+}
+
+.content {
+  margin-left: 250px;
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    position: static;
+    height: auto;
+  }
+
+  .content {
+    margin-left: 0;
+  }
+}
+
+/* ********************* Chat Card 1 *********************** */
+/* chat.css */
+body {
+  display: flex;
+  flex-direction: row;
+}
+
+h3 {
+  font-size: 20px;
+  color: blue;
+}
+
+h5 {
+  font-size: 10px;
+  color: blue;
+}
+
+.Card-Container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  width: 900px;
+}
+
+.chat-card1 {
+  width: 45%;
+  height: 15px;
+  margin-right: 150px; /* Add a gap between the cards */
+  display: block;
+  margin-bottom: 20px;
+}
+
+.chat-card:last-child {
+  margin-right: 0; /* Remove the gap for the last card */
+}
+
+/* New styles for the cards */
+.chat-card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.label-field {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  margin-right: 0px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  gap: 6px;
+}
+
+.label-field label {
+  width: 70%;
+  font-weight: bold;
+  display: block; /* Change to block display */
+  background-color: #fff; /* Add white background */
+  margin-top: 10px; /* Add margin-top for gap */
+  padding: 10px; /* Add padding for spacing */
+  border-radius: 5px; /* Add rounded corners */
+}
+
+.label-field p {
+  width: 30%;
+  margin-top: 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 3px;
+}
+
+/* *************** Card 2 Styles ****************** */
+
+.chat-card2 {
+  background-color: #f1f1f1;
+  border-radius: 10px; /* Add border radius */
+  height: 80vh;
+  width: 55%;
+  position: relative;
+}
+
+.card-header {
+  border-bottom: 2px solid blue;
+  margin-left: 10px;
+}
+
+.card-body {
+  flex: 1;
+  height: 90%;
+  margin-bottom: 80px;
+  overflow-y: hidden; /* Hide the vertical scrollbar */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.messages {
+  display: inline; /* Change to inline */
+  word-wrap: break-word;
+  padding: 30px;
+}
+
+.messages p {
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+.card-footer {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+}
+
+.card-footer form {
+  flex: 100;
+  display: flex;
+  flex-direction: row; /* Change to row */
+  align-items: center; /* Center the items horizontally */
+  justify-content: center; /* Center the items vertically */
+  margin-right: 20px;
+}
+
+.card-footer input[type="text"] {
+  flex: 1; /* Let the input fields take equal space */
+  max-width: 30%; /* Limit input field width */
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 5px; /* Add margin for spacing */
+}
+
+.card-footer button {
+  padding: 5px 10px;
+  background-color: blue;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+/* Add new CSS rules for the sender and receiver messages */
+.messages {
+  max-height: 10px;
+  
+}
+
+
+
+.messages .sender-message {
+  background-color: rgb(211, 211, 211);
+  align-self: flex-start; /* Align to the left side */
+  border-radius: 10px 10px 10px 0; /* Rounded corners on the left */
+  color: #fff;
+  
+  padding: 10px;
+  border-radius: 30px;
+  margin-left: 200px;
+  text-align: left;
+}
+
+.messages .receiver-message {
+  background-color: rgba(58, 151, 210);
+  align-self: flex-end; /* Align to the right side */
+  border-radius: 10px 10px 0 10px; /* Rounded corners on the right */
+  color: #fff;
+  
+  padding: 10px;
+  border-radius: 30px;
+  margin-right: 200px;
+  text-align: left;
+}
+
+.label-field:hover {
+  color: blue;
+  cursor: pointer;
+}
+
+.message-text {
+  font-size: 14px;
+}
+
+.time-stamp {
+  font-size: 10px;
+  margin-left: 5px;
+}
+
+ /* Style for the "Verified" and "Unverified" signature */
+ .signature-verification {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 10px;
+  margin-left: 150px;
+}
+
+.verified {
+  background-color: green;
+  color: white;
+  font-weight: bold;
+}
+
+.unverified {
+  background-color: red;
+  color: white;
+  font-weight: bold;
+}

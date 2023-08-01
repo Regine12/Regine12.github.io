@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Settings</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='settings.css') }}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</head>
+<body>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      {% if user_name %}
+      <h3>{{ user_name }}</h3>
+      {% else %}
+      <h3>Guest</h3>
+      {% endif %}
+    </div>
+    <ul class="sidebar-links">
+      <li>
+        <a href="{{ url_for('dashboard') }}"><i class="fas fa-home"></i> Home</a>
+      </li>
+      <li>
+        <a href="{{ url_for('chat') }}"><i class="fas fa-comments"></i> Chat</a>
+      </li>
+      <li>
+        <a href="{{ url_for('credentials') }}"><i class="fas fa-key"></i> Credentials</a>
+      </li>
+      <li class="active">
+        <a href="{{ url_for('settings') }}"><i class="fas fa-cog"></i> Settings</a>
+      </li>
+      <li>
+        <a href="{{ url_for('logout') }}"><i class="fas fa-door"></i> Logout</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Settings</h3>
+    </div>
+
+    <div class="card-body">
+      {% if user_name %}
+      <p>Welcome, {{ user_name }}! You are in the settings section.</p>
+      {% else %}
+      <p>Welcome, Guest! Please log in to access the settings section.</p>
+      {% endif %}
+    </div>
+
+    <div class="card-footer">
+      <h4>Additional Settings</h4>
+      <div class="setting-option">
+        <label for="dark-mode">Enable Dark Mode</label>
+        <input type="checkbox" id="dark-mode" />
+      </div>
+      <div class="setting-option">
+        <label for="notifications">Receive Notifications</label>
+        <input type="checkbox" id="notifications" />
+      </div>
+      <!-- Add more cool settings here -->
+    </div>
+  </div>
+
+  <script>
+    // Function to enable dark mode
+    function enableDarkMode() {
+      // Add a class to the <body> element to apply dark mode styles
+      document.body.classList.add('dark-mode');
+      // Save the user's dark mode preference in localStorage
+      localStorage.setItem('darkMode', 'enabled');
+    }
+  
+    // Function to disable dark mode
+    function disableDarkMode() {
+      // Remove the class from the <body> element to revert to light mode styles
+      document.body.classList.remove('dark-mode');
+      // Save the user's dark mode preference in localStorage
+      localStorage.setItem('darkMode', 'disabled');
+    }
+  
+    // Check the user's dark mode preference in localStorage on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      const darkModePreference = localStorage.getItem('darkMode');
+      if (darkModePreference === 'enabled') {
+        enableDarkMode();
+        // Check the checkbox if dark mode is enabled
+        document.getElementById('dark-mode').checked = true;
+      }
+    });
+  
+    // Event listener for the checkbox to toggle dark mode
+    document.getElementById('dark-mode').addEventListener('change', function () {
+      if (this.checked) {
+        enableDarkMode();
+      } else {
+        disableDarkMode();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+body {
+    background-color: skyblue;
+    margin: 0;
+    padding: 0;
+}
+
+.profile-image {
+    border-radius: 50%;
+}
+
+.sidebar {
+    background-color: #fff;
+    width: 250px;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.sidebar-header {
+    text-align: center;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px solid blue; /* Add blue bottom line */
+}
+
+.user-name {
+    padding-top: 10px; /* Increase top padding for user name */
+}
+
+.sidebar-header img {
+    max-width: 100%;
+    height: auto;
+}
+
+.sidebar-header h3 {
+    margin-top: 10px;
+}
+
+.sidebar-links {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.sidebar-links li {
+    margin-bottom: 10px;
+}
+
+.sidebar-links li a {
+    color: blue;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.sidebar-links li.active a {
+    background-color: blue;
+    color: white;
+}
+
+.content {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        position: static;
+        height: auto;
+    }
+
+    .content {
+        margin-left: 0;
+    }
+}
+
+/* Style for the "Learn more" dropdown content */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid blue;
+    padding: 20px;
+    margin-top: 10px;
+    text-align: center;
+    word-wrap: break-word;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  /* Additional style for links inside the dropdown content */
+  .dropdown-content a {
+    color: blue;
+  }
+
+  /* Show the dropdown content when the "Learn more" button is hovered */
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }

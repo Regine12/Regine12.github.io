@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dashboard.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .quote-card {
+            background-color: white;
+            color: blue;
+            border: 1px solid blue;
+            padding: 20px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            word-wrap: break-word;
+            display: none;
+        }
+        .quote-card.active {
+            display: flex;
+        }
+        .quote-card p {
+            margin: 0;
+            max-width: 100%;
+            overflow-wrap: break-word;
+        }
+        .card {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        .card-header {
+            background-color: blue;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card-header .welcome {
+            margin-left: 20px;
+        }
+        .card-header img.logo {
+            height: 50px;
+            margin-right: 20px;
+        }
+        .card-body {
+            overflow-y: auto;
+            max-height: 350px;
+        }
+        .sidebar {
+            background-color: lightgray;
+            color: white;
+            height: 100%;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 200px;
+            padding-top: 20px;
+        }
+        .sidebar-header {
+            background-color: blue;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .sidebar-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar-links li {
+            padding: 10px;
+        }
+        .sidebar-links li a {
+            color: white;
+            text-decoration: none;
+        }
+        .sidebar-links li.active {
+            background-color: blue;
+        }
+        .sidebar-links li.active a {
+            color: white;
+        }
+        .logo {
+            margin-top: 20px;
+        }
+        .copy-btn {
+            margin-top: 10px;
+            background-color: blue;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        /* Responsive styles */
+        @media only screen and (max-width: 600px) {
+            .quote-card {
+                padding: 10px;
+                font-size: 14px;
+            }
+            .quote-card p {
+                font-size: 16px;
+            }
+        }
+        .more-content {
+            display: none;
+            background-color: white;
+            color: blue;
+            border: 1px solid blue;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+            word-wrap: break-word;
+        }
+        .more {
+            margin-top: 10px;
+            background-color: blue;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            {% if user_name %}
+                <h3>{{ user_name }}</h3>
+            {% else %}
+                <h3>Guest</h3>
+            {% endif %}
+        </div>
+        <ul class="sidebar-links">
+            <li class="active"><a href="{{ url_for('dashboard') }}"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="{{ url_for('chat') }}"><i class="fas fa-comments"></i> Chat</a></li>
+            <li><a href="{{ url_for('credentials') }}"><i class="fas fa-key"></i> Credentials</a></li>
+            <li><a href="{{ url_for('settings') }}"><i class="fas fa-cog"></i> Settings</a></li>
+            <li><a href="{{ url_for('logout') }}"><i class="fas fa-door"></i> Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <img class="logo"src="{{ url_for('static', filename='s.png') }}" alt="Logo">
+            <div class="welcome">
+                {% if user_name %}
+                    <h3>Welcome, {{ user_name }}!</h3>
+                {% else %}
+                    <h3>Welcome, Guest!</h3>
+                {% endif %}
+                <p>The Security Whisperer:</p>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="quote-card active">
+                <p>"A PKI is only as strong as its weakest link."</p>
+                <div class="dropdown">
+                    <button class="learn-more">Learn more</button>
+                    <!-- Add the dropdown content here -->
+                    <div class="dropdown-content">
+                      <p>This is the longer version of the text.</p>
+                      <a href="https://www.example.com">Link to a related resource</a>
+                      <img src="https://www.example.com/image.png" alt="Image">
+                    </div>
+                  </div>
+                  
+            </div>
+            <div class="quote-card">
+                <p>"Asymmetric cryptography is like having two locks on a door: one lock can be opened with a public key, while the other lock can only be opened with a private key."</p>
+                <button class="learn-more">Learn more</button>
+            </div>
+            <div class="quote-card">
+                <p>"In cybersecurity, the attackers only have to be right once, while the defenders have to be right all the time."</p>
+                <button class="learn-more">Learn more</button>
+            </div>
+            <div class="quote-card">
+                <p>"RSA algorithm is a widely used public-key cryptography algorithm that is used for secure data transmission."</p>
+                <button class="learn-more">Learn more</button>
+            </div>
+            <div class="quote-card">
+                <p>"A digital signature is a mathematical technique used to validate the authenticity and integrity of a message, software or digital document."</p>
+                <button class="learn-more">Learn more</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quoteCards = document.querySelectorAll('.quote-card');
+        let currentQuote = 0;
+
+        setInterval(() => {
+            quoteCards[currentQuote].classList.remove('active');
+            currentQuote = (currentQuote + 1) % quoteCards.length;
+            quoteCards[currentQuote].classList.add('active');
+        }, 10000);
+    </script>
+
+    <script>
+        console.log("Dashboard")
+    </script>
+</body>
+</html>
